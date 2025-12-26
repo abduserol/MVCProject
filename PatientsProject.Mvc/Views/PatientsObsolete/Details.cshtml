@@ -1,0 +1,24 @@
+@model PatientResponse
+
+@{
+    ViewBag.Title = "Patients Details";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<p class="text-success">
+    @ViewBag.Message
+</p>
+
+
+@if (Model is not null)
+{
+
+    <dl>
+        <dt>@Html.DisplayNameFor(patientResponse => patientResponse.Height)</dt>
+        <dd>@Html.DisplayFor(patientResponse => patientResponse.Weight)</dd>
+    </dl>
+
+}
+<hr />
+<a asp-action="Index" class="btn btn-outline-dark">Back to Patient List</a>

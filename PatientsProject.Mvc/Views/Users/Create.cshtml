@@ -1,0 +1,125 @@
+@model UserRequest
+
+@{
+    var containerDivClass = "container";
+    ViewData["Title"] = "User Create";
+}
+
+<div class="@containerDivClass">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+</div>
+
+<div class="@containerDivClass">
+    <form asp-action="Create" autocomplete="off">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @* --- USER NAME --- *@
+        <div class="row mb-3">
+            <label asp-for="UserName" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* --- PASSWORD --- *@
+        <div class="row mb-3">
+            <label asp-for="Password" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* --- FIRST NAME & LAST NAME --- *@
+        <div class="row mb-3">
+            <label asp-for="FirstName" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-4">
+                <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <label asp-for="LastName" class="col-2 col-form-label fw-bold text-end"></label>
+            <div class="col-4">
+                <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* --- GENDER (ENUM DROPDOWN) --- *@
+        <div class="row mb-3">
+            <label asp-for="Gender" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <select asp-for="Gender" class="form-select" 
+                        asp-items="Html.GetEnumSelectList<Genders>()">
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* --- BIRTH DATE --- *@
+        <div class="row mb-3">
+            <label asp-for="BirthDate" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <input asp-for="BirthDate" type="date" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+        </div>
+        
+        @* --- ADDRESS --- *@
+        <div class="row mb-3">
+            <label asp-for="Address" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <textarea asp-for="Address" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* --- GROUP (DROPDOWN) --- *@
+        <div class="row mb-3">
+            <label asp-for="GroupId" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <select asp-for="GroupId" class="form-select" asp-items="ViewBag.GroupId">
+                    <option value="">-- Select Group --</option>
+                </select>
+                <span asp-validation-for="GroupId" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* --- ROLES (MULTI SELECT) --- *@
+        <div class="row mb-3">
+            <label asp-for="RoleIds" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <select asp-for="RoleIds" class="form-select" asp-items="ViewBag.RoleIds" multiple style="height: 100px;">
+                </select>
+                <span asp-validation-for="RoleIds" class="text-danger"></span>
+                <span class="text-muted small">Hold CTRL to select multiple roles.</span>
+            </div>
+        </div>
+
+        @* --- IS ACTIVE --- *@
+        <div class="row mb-3">
+            <label asp-for="IsActive" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10 pt-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="IsActive" />
+                    <label class="form-check-label" asp-for="IsActive">Active User</label>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row mb-3">
+            <div class="offset-2 col-10">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="reset" class="btn btn-outline-primary">Reset</button>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

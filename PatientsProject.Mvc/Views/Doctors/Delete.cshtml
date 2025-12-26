@@ -1,0 +1,77 @@
+@model DoctorResponse
+
+
+@{
+    var containerDivClass = "container";
+    ViewData["Title"] = "Doctor Delete";
+}
+
+<div class="@containerDivClass">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+</div>
+
+@if (Model is not null)
+{
+<div class="@containerDivClass">
+    @if (TempData["Message"] is not null)
+    {
+        <p class="text-danger">
+            @TempData["Message"]
+        </p>
+    }
+    
+    <h3 class="text-danger">Are you sure you want to delete?</h3>
+    <hr />
+    
+    @* --- BRANŞ BİLGİSİ --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.Branch)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.Branch)
+        </div>
+    </div>
+
+    @* <div class="row mb-3"> *@
+    @*     <div class="col-2 fw-bold"> *@
+    @*         @Html.DisplayNameFor(model => model.UserId) *@
+    @*     </div> *@
+    @*     <div class="col-10"> *@
+    @*         @Html.DisplayFor(model => model.UserId) *@
+    @*     </div> *@
+    @* </div> *@
+    @* *@
+    @* <div class="row mb-3"> *@
+    @*     <div class="col-2 fw-bold"> *@
+    @*         @Html.DisplayNameFor(model => model.GroupId) *@
+    @*     </div> *@
+    @*     <div class="col-10"> *@
+    @*         @Html.DisplayFor(model => model.GroupId) *@
+    @*     </div> *@
+    @* </div> *@
+
+    @* --- HASTA SAYISI --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.PatientCount)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.PatientCount)
+        </div>
+    </div>
+
+ 
+
+    <hr />
+    <form asp-action="Delete">
+        @Html.AntiForgeryToken()
+        
+        <input type="hidden" asp-for="Id" />
+        
+        <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
+        <a asp-action="Index" class="btn btn-outline-danger">No</a>
+    </form>
+</div>
+}

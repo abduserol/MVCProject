@@ -1,0 +1,83 @@
+@model PatientsProject.App.Models.RoleResponse
+
+@{
+    ViewData["Title"] = "Role Details";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-9">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h1 class="h3 mb-1">@ViewData["Title"]</h1>
+                    <small class="text-muted">View detailed information about this role.</small>
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+
+            @if (TempData["Message"] is not null)
+            {
+                <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                    @TempData["Message"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (Model is not null)
+            {
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 col-12 text-muted fw-semibold">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </div>
+                            <div class="col-md-8 col-12">
+                                @Html.DisplayFor(model => model.Name)
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 col-12 text-muted fw-semibold">
+                                @Html.DisplayNameFor(model => model.UserCount)
+                            </div>
+                            <div class="col-md-8 col-12">
+                                <span class="badge bg-info">@Model.UserCount</span>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.Users))
+                        {
+                            <div class="row mb-4">
+                                <div class="col-md-4 col-12 text-muted fw-semibold">
+                                    Users
+                                </div>
+                                <div class="col-md-8 col-12">
+                                    @Html.Raw(Model.Users)
+                                </div>
+                            </div>
+                        }
+
+                        <hr />
+
+                        <div class="d-flex flex-wrap gap-2 justify-content-end">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                                Edit
+                            </a>
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                Back to Role List
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

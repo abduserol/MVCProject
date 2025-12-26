@@ -1,0 +1,71 @@
+@model BranchResponse
+
+@* Generated from Custom MVC Template. *@
+
+@{
+    var containerDivClass = "container";
+    ViewData["Title"] = "Branch Delete";
+}
+
+<div class="@containerDivClass">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+</div>
+
+@if (Model is not null)
+{
+    <div class="@containerDivClass">
+        @if (TempData["Message"] is not null)
+        {
+            @* Hata mesajı varsa (örneğin: "Doktoru olan branş silinemez" hatası) burada görünür *@
+            <p class="text-danger">
+                @TempData["Message"]
+            </p>
+        }
+    
+        <h3 class="text-danger">Are you sure you want to delete?</h3>
+        <hr />
+    
+        @* --- TITLE --- *@
+        <div class="row mb-3">
+            <div class="col-2 fw-bold">
+                @Html.DisplayNameFor(model => model.Title)
+            </div>
+            <div class="col-10">
+                @Html.DisplayFor(model => model.Title)
+            </div>
+        </div>
+
+        @* --- DOCTOR COUNT --- *@
+        <div class="row mb-3">
+            <div class="col-2 fw-bold">
+                @Html.DisplayNameFor(model => model.DoctorCount)
+            </div>
+            <div class="col-10">
+                @Html.DisplayFor(model => model.DoctorCount)
+            </div>
+        </div>
+
+        @* --- DOCTORS LIST --- *@
+        <div class="row mb-3">
+            <div class="col-2 fw-bold">
+                <b>@Html.DisplayNameFor(model => model.Doctors)</b>
+            </div>
+            <div class="col-10">
+                @* Servisten gelen string içinde <br> tagleri olduğu için Raw kullanıyoruz *@
+                @Html.Raw(Model.Doctors)
+            </div>
+        </div>
+
+        <hr />
+        <form asp-action="Delete">
+            @Html.AntiForgeryToken()
+        
+            @* Silinecek kaydın ID'sini gizli olarak gönderiyoruz *@
+            <input type="hidden" asp-for="Id" />
+        
+            <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
+            <a asp-action="Index" class="btn btn-outline-danger">No</a>
+        </form>
+    </div>
+}

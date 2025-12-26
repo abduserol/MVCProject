@@ -1,0 +1,122 @@
+@model UserResponse
+
+@{
+    var containerDivClass = "container";
+    ViewData["Title"] = "User Details";
+}
+
+<div class="@containerDivClass">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+</div>
+
+@if (Model is not null)
+{
+<div class="@containerDivClass">
+    @if (TempData["Message"] is not null)
+    {
+        <p class="text-danger">@TempData["Message"]</p>
+    }
+
+    @* --- USER NAME --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.UserName)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.UserName)
+        </div>
+    </div>
+
+    @* --- FULL NAME (First + Last) --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">Full Name</div>
+        <div class="col-10">
+            @Model.FirstName @Model.LastName
+        </div>
+    </div>
+
+    @* --- GENDER --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.Gender)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.Gender)
+        </div>
+    </div>
+
+    @* --- BIRTH DATE --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.BirthDateF)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.BirthDateF)
+        </div>
+    </div>
+
+    @* --- ADDRESS --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.Address)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.Address)
+        </div>
+    </div>
+
+    @* --- GROUP --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.Group)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.Group)
+        </div>
+    </div>
+
+    @* --- ROLES (HTML RAW) --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.Roles)
+        </div>
+        <div class="col-10">
+            @* Serviste <br> ile birleştirdiğimiz için Raw kullanıyoruz *@
+            @Html.Raw(Model.Roles)
+        </div>
+    </div>
+
+    @* --- STATUS --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.IsActiveF)
+        </div>
+        <div class="col-10">
+            @if (Model.IsActive)
+            {
+                <span class="badge bg-success">Active</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Passive</span>
+            }
+        </div>
+    </div>
+    
+    @* --- REGISTRATION DATE --- *@
+    <div class="row mb-3">
+        <div class="col-2 fw-bold">
+            @Html.DisplayNameFor(model => model.RegistrationDateF)
+        </div>
+        <div class="col-10">
+            @Html.DisplayFor(model => model.RegistrationDateF)
+        </div>
+    </div>
+
+    <hr />
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>&nbsp;|&nbsp;
+    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>&nbsp;|&nbsp;
+    <a asp-action="Index">Back to List</a>
+</div>
+}

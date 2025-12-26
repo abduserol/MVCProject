@@ -1,0 +1,76 @@
+@model PatientRequest
+
+@{
+    var containerDivClass = "container";
+    ViewData["Title"] = "Patient Create";
+}
+
+<div class="@containerDivClass">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+</div>
+
+<div class="@containerDivClass">
+    @if (TempData["Message"] is not null)
+    {
+        <p class="text-danger">
+            @TempData["Message"]
+        </p>
+    }
+    
+    <form asp-action="Create" autocomplete="off">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @* --- HEIGHT INPUT --- *@
+        <div class="row mb-3">
+            <label asp-for="Height" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <input asp-for="Height" class="form-control" placeholder="Enter height (cm)" /> 
+                <span asp-validation-for="Height" class="text-danger"></span> 
+            </div>
+        </div>
+
+        @* --- WEIGHT INPUT --- *@
+        <div class="row mb-3">
+            <label asp-for="Weight" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <input asp-for="Weight" class="form-control" placeholder="Enter weight (kg)" /> 
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* --- DOCTORS MULTI-SELECT --- *@
+        <div class="row mb-3">
+            <label asp-for="DoctorIds" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                @* multiple: Çoklu seçime izin verir.
+                   asp-items: Controller'daki SetViewData metodundan gelen listeyi bağlar.
+                *@
+                <select asp-for="DoctorIds" class="form-select" asp-items="ViewBag.Doctors" multiple style="height: 150px;">
+                </select>
+                <span asp-validation-for="DoctorIds" class="text-danger"></span>
+                
+                @* Kullanıcı deneyimi için bilgilendirme mesajı *@
+                <span class="text-muted small">
+                    <i class="bi bi-info-circle"></i> Hold <b>CTRL</b> (Windows) or <b>CMD</b> (Mac) key to select multiple doctors.
+                </span>
+            </div>
+        </div>
+
+        <hr />  
+        <div class="row mb-3">
+            <div class="offset-2 col-10">
+                <button type="submit" class="btn btn-primary">Save</button>
+                &nbsp;&nbsp;
+                <button type="reset" class="btn btn-outline-primary">Reset</button>
+                &nbsp;&nbsp;
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>  
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

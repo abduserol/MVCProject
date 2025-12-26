@@ -1,0 +1,61 @@
+@model PatientsProject.App.Models.GroupRequest
+
+@{
+    ViewData["Title"] = "Create Group";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-xl-9 col-lg-10">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h1 class="h3 mb-1">@ViewData["Title"]</h1>
+                    <small class="text-muted">Create a new group and manage its properties.</small>
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+
+                    <form asp-action="Create" autocomplete="off">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <!-- Title -->
+                        <div class="row mb-3">
+                            <label asp-for="Title" class="col-md-3 col-12 col-form-label fw-semibold"></label>
+                            <div class="col-md-9 col-12">
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <div class="d-flex flex-wrap gap-2 justify-content-end">
+                            <button type="submit" class="btn btn-primary">
+                                Create
+                            </button>
+                            <button type="reset" class="btn btn-outline-primary">
+                                Reset
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                Back to Group List
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+@model IEnumerable<UserResponse>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1"><i class="bi bi-people-fill text-info"></i> @ViewData["Title"]</h2>
+            @if (Model is not null)
+            {
+                <small class="text-muted">
+                    <span class="badge bg-info">@Model.Count()</span> user(s) found
+                </small>
+            }
+        </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-info text-white">
+                <i class="bi bi-plus-lg"></i> Add User
+            </a>
+        }
+    </div>
+
+    <!-- Message -->
+    @if (TempData["Message"] is not null)
+    {
+        var message = TempData["Message"].ToString();
+        var alertClass = message.Contains("not authorized") ? "alert-danger" : "alert-success";
+        var iconClass = message.Contains("not authorized") ? "bi-exclamation-triangle" : "bi-check-circle";
+        <div class="alert @alertClass alert-dismissible fade show" role="alert">
+            <i class="bi @iconClass"></i> @message
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Table -->
+    @if (Model is not null && Model.Any())
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="bi bi-person"></i> Username</th>
+                            <th><i class="bi bi-card-text"></i> Full Name</th>
+                            <th><i class="bi bi-collection"></i> Group</th>
+                            <th><i class="bi bi-shield"></i> Roles</th>
+                            <th><i class="bi bi-toggle-on"></i> Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><strong>@item.UserName</strong></td>
+                                <td>@item.FirstName @item.LastName</td>
+                                <td>
+                                    <span class="badge bg-secondary">@item.Group</span>
+                                </td>
+                                <td>
+                                    @Html.Raw(item.Roles?.Replace("<br>", " "))
+                                </td>
+                                <td>
+                                    @if (item.IsActive)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Inactive</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" title="Details">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No users found.
+        </div>
+    }
+</div>

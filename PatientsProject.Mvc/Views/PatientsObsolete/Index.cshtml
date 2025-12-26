@@ -1,0 +1,53 @@
+@model IEnumerable<PatientResponse>
+@{
+    ViewBag.Title = "Patient List";
+}
+
+<h1>@ViewBag.Title</h1>
+
+@if (TempData["Message"] is not null)
+{
+    <p class="bg-warning text-black">
+        @TempData["Message"]
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+
+            @Html.DisplayNameFor(patientResponse => patientResponse.Height)
+
+        </th>
+        <th>
+
+            @* The property name will be written since there is no DisplayName attribute defined for the Description property like the Title property *@
+            @Html.DisplayNameFor(patientResponse => patientResponse.Weight)
+
+        </th>
+        <th>
+            Operation Links
+        </th>
+    </tr>
+    @foreach (PatientResponse item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(patientResponse => item.Height)
+                
+            </td>
+            <td>
+                @Html.DisplayFor(patientResponse => item.Weight)
+            </td>
+            <td>
+                <a asp-controller="PatientsObsolete" asp-action="Details" asp-route-id="@item.Id">Patient Details</a>
+                &nbsp;
+                <a asp-controller="PatientsObsolete"  asp-action="Edit" asp-route-id="@item.Id">Edit Patient</a>
+                &nbsp;
+                <a  asp-controller="PatientsObsolete" asp-action="Delete" asp-route-id="@item.Id">Delete Patient</a>
+            </td>
+        </tr>
+    }
+</table>
+<hr />
+<a asp-controller="PatientsObsolete"  asp-action="Create">Create New Patient</a>
